@@ -17,6 +17,15 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
+        Usuario autenticado = usuarioService.loginUsuario(usuario.getEmail(), usuario.getPassword_hash());
+        if (autenticado != null) {
+            return ResponseEntity.ok(autenticado);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 
     //Listar Usuarios
     @GetMapping("/listar")

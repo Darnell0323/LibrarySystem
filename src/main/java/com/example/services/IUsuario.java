@@ -10,4 +10,5 @@ public interface IUsuario {
     Usuario buscarUsuarioPorId(int id);
     void borrarUsuario(int id);
     Usuario modificarUsuario(Usuario usuario);
+    Usuario loginUsuario(String email, String password_hash);
 }

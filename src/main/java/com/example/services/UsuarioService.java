@@ -54,4 +54,9 @@ public class UsuarioService implements IUsuario {
             throw new RuntimeException("Usuario no encontrado");
         }
     }
+
+    @Override
+    public Usuario loginUsuario(String email, String password) {
+        return usuarioRepository.findByEmailAndPassword_hash(email, password);
+    }
 }
