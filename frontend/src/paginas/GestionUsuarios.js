@@ -1,13 +1,13 @@
 import React, { useState, useEffect  } from 'react';
-import { Button } from './ui/button';
-import { Table, TableHeader, TableBody, TableRow, TableCell } from './ui/table';
+import { Button } from '../components/ui/button';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from '../components/ui/table';
 import {
     Modal,
     ModalContent,
     ModalHeader,
     ModalTitle,
     ModalFooter,
-} from './ui/modal';
+} from '../components/ui/modal';
 
 const GestionUsuarios = () => {
     const [users, setUsers] = useState([]);
@@ -263,7 +263,7 @@ const GestionUsuarios = () => {
                                         required
                                     >
                                         <option value="usuario">Usuario</option>
-                                        <option value="administrador">Administrador</option>
+                                        <option value="admin">Admin</option>
                                     </select>
                                 </div>
                             </div>

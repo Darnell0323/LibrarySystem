@@ -2,20 +2,28 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
+import { toast } from 'react-toastify';
+import { useAuth } from '../AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8094/usuario/login', { email, password_hash: password });
             console.log('Login successful:', response.data);
-            // Redirigir al usuario al dashboard
-            navigate('/dashboard');
+            toast.success('Login successful!');
+            login(response.data.rol); // Actualiza el estado de autenticación con el rol del usuario
+            if (response.data.rol === 'admin') {
+                navigate('/gestionUsuarios');
+            } else {
+                navigate('/dashboard');
+            }
             setError('');
         } catch (error) {
             console.error('Login failed:', error);
