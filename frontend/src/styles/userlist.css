@@ -6,22 +6,21 @@
 
 .addmain h1 {
     font-size: 34px;
-    /* text-align: center; */
     margin-left: 90px;
-    /* color: #363838; */
     color: #03343a;
-    padding: 20px 0px 20px;
+    padding: 20px 0px;
+    text-align: center;
 }
 
 .section {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
-    margin: 0px 80px 0px 80px;
+    margin: 0px 20px;
     padding-bottom: 30px;
 }
 
-/* user-card */
+/* Card styling for general cards */
 .card {
    display: flex;
    flex-direction: column;
@@ -34,10 +33,6 @@
    border: 0px solid #aaa9a7;
    transition: 0.5s;
    box-shadow: 1px 1px 10px rgb(177 170 170);
-}
-/* usercard css */
-.usercard {
-    height: 200px;
 }
 
 .card:hover,
@@ -54,12 +49,12 @@
     margin-bottom: 20px;
 }
 
-
 .card p {
     margin-bottom: 5px;
     font-size: 14px;
 }
 
+/* Button styling inside cards */
 .card .btn {
     margin: 10px auto;
 }
@@ -69,13 +64,10 @@
     border-radius: 6px;
     font-size: 12px;
     font-weight: bold;
-    background-color: transparent;
-    /* background-color: #323434; */
     background-color: #03343a;
     font-family: inherit;
     border: 1px solid rgb(255, 255, 255);
     cursor: pointer;
-    /* color: #fed04a; */
     color: white;
     transition: 0.5s;
 }
@@ -84,51 +76,49 @@
     background-color: #1e2121;
 }
 
-/* //book card css */
+/* Book card styling */
 .bookcard {
-    display: grid;
-    width: 100%;
-    grid-template-columns: 19% auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     border-radius: 8px;
     transition: 0.5s;
     box-shadow: 2px 2px 10px rgb(201, 199, 199);
     border: 0px solid #aaa9a7;
     background-color: white;
-    height: auto;
-    padding: 25px 45px 25px 45px;
-    margin: 10px 10px 10px 10px;
+    padding: 15px;
+    margin: 10px;
+    max-width: 800px;
+    width: 100%;
 }
 
 .bookcard .bookimage {
     display: flex;
     align-items: center;
-    margin-top: 5px;
+    justify-content: center;
+    margin-right: 20px;
     border: 1px solid rgb(255, 255, 255);
 }
 
 .bookcard img {
-    width: 155px;
-    height: 220px;
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
 }
-/* .bookcard img {
-    width: 190px;
-    height: 257px;
-} */
 
-.card-info {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    height: 150px;
+/* Information container inside book card */
+.bookcardinfo {
+    flex: 1;
 }
 
 .bookscardinfo-no-btns {
-    height: 170px;
-    display: grid;
-    grid-template-rows: auto auto auto auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .bookscardinfo-no-btns h2 {
-    font-size: 23px;
+    font-size: 20px;
     color: #000000;
     padding-bottom: 10px;
     font-weight: bold;
@@ -140,15 +130,16 @@
     width: 100%;
     height: 1px;
     top: 100%;
-    left: 0px;
+    left: 0;
     position: absolute;
     background-color: #aaa9a7;
 }
 
 .bookscardinfo-no-btns p {
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 14px;
+    line-height: 1.5;
     color: #3a3434;
+    margin: 5px 0;
 }
 
 .bookscardinfo-no-btns p span {
@@ -157,24 +148,40 @@
     color: #2f2c2c;
 }
 
+/* Search bar styling */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Button styling within book list */
 .booklistbtn {
     cursor: pointer;
-    background-color: #333;
-    border: none;
     background-color: #035762;
+    border: none;
     padding: 10px 25px;
     font-family: monospace;
     font-size: 14px;
-    transition: 0.5s;
     font-weight: 600;
-    /* color: #fed04a; */
     color: white;
     border-radius: 2px;
+    transition: 0.5s;
+}
+
+.booklistbtn:hover {
+    background-color: #03343a;
 }
 
 .booklistbtns {
-    text-align: center;
-    display: inline-block;
     display: flex;
     align-items: center;
 }
@@ -184,22 +191,13 @@
     margin-right: 25px;
 }
 
-.booklistbtn:hover {
-        box-shadow: 0px 0px 0px rgb(201, 199, 199);
-background-color: #03343a;
-    /* box-shadow: 2px 2px 10px rgb(99, 97, 97); */
-    /* background-color: rgb(30, 30, 30); */
-}
-
+/* Delete button within book card */
 .bookcard .booklistremove {
     background-color: transparent;
-    border: none;
     border: 1px solid #aaa9a7;
     padding: 6px 15px;
     transition: 0.5s;
     cursor: pointer;
-         /* border-radius: 5px; */
-
 }
 
 .bookcard .booklistremove:hover {
@@ -210,6 +208,7 @@ background-color: #03343a;
     height: 18px;
     width: auto;
 }
+
 
 .search-bar {
     margin-bottom: 20px;
