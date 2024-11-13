@@ -24,7 +24,7 @@ const GestionUsuarios = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:8080/usuario/listar');
+            const response = await fetch('http://localhost:8094/usuario/listar');
             const data = await response.json();
             setUsers(data);
         } catch (error) {
@@ -34,7 +34,8 @@ const GestionUsuarios = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [fetchUsers]);
+
 
     const handleInputChange = (e) => {
         setFormData({
@@ -51,8 +52,8 @@ const GestionUsuarios = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = currentUser
-            ? 'http://localhost:8080/usuario/editar'
-            : 'http://localhost:8080/usuario/nuevo';
+            ? 'http://localhost:8094/usuario/editar'
+            : 'http://localhost:8094/usuario/nuevo';
 
         try {
             const response = await fetch(url, {
@@ -77,7 +78,7 @@ const GestionUsuarios = () => {
     const handleDelete = async (id) => {
         if (window.confirm('¿Está seguro de eliminar este usuario?')) {
             try {
-                const response = await fetch(`http://localhost:8080/usuario/eliminar/${id}`, {
+                const response = await fetch(`http://localhost:8094/usuario/eliminar/${id}`, {
                     method: 'DELETE',
                 });
 

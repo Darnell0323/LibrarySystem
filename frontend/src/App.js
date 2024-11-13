@@ -4,6 +4,7 @@ import './App.css';
 import Login from "./paginas/Login";
 import Dashboard from "./paginas/Dashboard";
 import Register from "./paginas/Register";
+import GestionUsuarios from "./components/GestionUsuarios";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/gestionUsuarios" element={<GestionUsuarios />}/>
+
           </Routes>
         </Router>
       </Fragment>
