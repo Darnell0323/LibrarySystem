@@ -26,6 +26,7 @@ public class Usuario {
     private String nombre_usuario;
 
 
+
     @Column(name = "contraseña")
     private String password_hash;
 
