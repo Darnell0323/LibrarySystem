@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -14,6 +14,7 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:8094/usuario/login', { email, password_hash: password });
             console.log('Login successful:', response.data);
+            // Redirigir al usuario al dashboard
             navigate('/dashboard');
             setError('');
         } catch (error) {
@@ -48,6 +49,9 @@ const Login = () => {
                     />
                 </div>
                 <button type="submit">Login</button>
+                <p className="register-link">
+                    Don't have an account? <Link to="/register">Register here</Link>
+                </p>
             </form>
         </div>
     );
