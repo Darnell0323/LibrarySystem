@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8094/usuario/login', { email, password_hash: password });
             console.log('Login successful:', response.data);
-            // Maneja el inicio de sesión exitoso (por ejemplo, guarda el token, redirige, etc.)
+            navigate('/dashboard');
             setError('');
         } catch (error) {
             console.error('Login failed:', error);
