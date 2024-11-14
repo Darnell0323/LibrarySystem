@@ -4,10 +4,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './paginas/Login';
 import Register from './paginas/Register';
-import Dashboard from './paginas/Dashboard';
 import { AuthProvider } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import GestionUsuarios from "./paginas/GestionUsuarios";
+import Booklist from "./paginas/Booklist";
 
 const App = () => {
     return (
@@ -19,10 +19,10 @@ const App = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route
-                            path="/dashboard"
+                            path="/books"
                             element={
                                 <ProtectedRoute>
-                                    <Dashboard />
+                                    <Booklist/>
                                 </ProtectedRoute>
                             }
                         />

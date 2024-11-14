@@ -22,7 +22,7 @@ const Login = () => {
             if (response.data.rol === 'admin') {
                 navigate('/gestionUsuarios');
             } else {
-                navigate('/dashboard');
+                navigate('/Booklist');
             }
             setError('');
         } catch (error) {
