@@ -7,6 +7,7 @@ export const logintoken = async (email, password_hash) => {
             "email": email,
             "password_hash": password_hash
         });
+        console.log(response.data);
         const token = response.data.token;
         const rol = response.data.rol;
         const nombre = response.data.nombre_usuario;

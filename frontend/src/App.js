@@ -10,32 +10,35 @@ import GestionUsuarios from "./paginas/GestionUsuarios";
 import Booklist from "./paginas/Booklist";
 import PrivateRoute from "./components/PrivateRoute";
 import {Home} from "lucide-react";
+import Dashboard from "./paginas/Dashboard";
+import Header from "./components/Header";
 
 const App = () => {
     return (
         <AuthProvider>
             <Router>
                 <div>
+                    <Header/>
                     <ToastContainer />
                     <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/" element={<PrivateRoute path="/books" role="Usuario" element={Booklist} />} />
-                        <Route path="/books/:id" element={<PrivateRoute path="/books" role="Bibliotecario" element={GestionUsuarios} />} />
-                        {/*<Route
-                            path="/books"
-                            element={
-                                <ProtectedRoute>
-                                    <Booklist/>
-                                </ProtectedRoute>
-                            }
-                        />
+                        <Route path="/Dashboard" element={<Dashboard/>}/>
+                        <Route path="/Home" element={<Home/>}/>
+                        <Route path="/Login" element={<Login />} />
+                        <Route path="/Register" element={<Register />} />
                         <Route
-                            path="/gestionUsuarios"
+                            path="/Libros"
                             element={
-                                <GestionUsuarios/>
-                            }
-                        />*/}
+                                <PrivateRoute
+                                    roles={['Usuario', 'Bibliotecario']}
+                                    element={Booklist}
+                                />} /> {/*Ruta protegida Booklist para usuarios y bibliotecario*/}
+                        <Route
+                            path="/GestionUsuarios"
+                            element={
+                                <PrivateRoute
+                                    roles={['Bibliotecario']}
+                                    element={GestionUsuarios}
+                                />}/>
                     </Routes>
                 </div>
             </Router>
