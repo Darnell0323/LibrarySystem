@@ -1,10 +1,11 @@
 import axiosInstance from '../api/axiosConfig';
+import {BASE_URL} from "../config/config";
 
-export const logintoken = async (username, password) => {
+export const logintoken = async (email, password_hash) => {
     try {
-        const response = await axiosInstance.post('http://localhost:8094/usuario/login', {
-            username,
-            password,
+        const response = await axiosInstance.post(`${BASE_URL}/usuario/login`, {
+            "email": email,
+            "password_hash": password_hash
         });
         const token = response.data.token;
         const rol = response.data.rol;
