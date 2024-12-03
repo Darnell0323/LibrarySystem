@@ -29,6 +29,7 @@ const Login = () => {
             console.error('Login failed:', error);
             setError('Login failed. Please check your email and password.');
         }
+
     };
 
     return (
