@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.Dtos.UsuarioDto;
 import com.example.models.Usuario;
 import com.example.security.TokenService;
 import com.example.services.UsuarioService;
@@ -36,14 +37,13 @@ public class UsuarioController {
 
     //Listar Usuarios
     @GetMapping("/listar")
-    public List<Usuario> cargarUsuarios() {
-        var aux = usuarioService.getUsuarios();
-        return aux;
+    public List<UsuarioDto> cargarUsuarios() {
+        return usuarioService.getUsuarios();
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Usuario> eliminar(@PathVariable int id) {
-        Usuario obj = usuarioService.buscarUsuarioPorId(id);
+    public ResponseEntity<UsuarioDto> eliminar(@PathVariable int id) {
+        UsuarioDto obj = usuarioService.buscarUsuarioPorId(id);
         if (obj != null) {
             usuarioService.borrarUsuario(id);
         } else {
@@ -53,15 +53,15 @@ public class UsuarioController {
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
     @PostMapping("/nuevo")
-    public  ResponseEntity<Usuario>agregar (@RequestBody Usuario usuario) {
-        Usuario obj = usuarioService.nuevoUsuario(usuario);
+    public  ResponseEntity<UsuarioDto>agregar (@RequestBody Usuario usuario) {
+        UsuarioDto obj = usuarioService.nuevoUsuario(usuario);
         return new ResponseEntity<>(obj, HttpStatus.OK);
 
     }
 
     @PutMapping("/editar")
-    public  ResponseEntity<Usuario>editar (@RequestBody Usuario usuario) {
-        Usuario obj = usuarioService.modificarUsuario(usuario);
+    public  ResponseEntity<UsuarioDto>editar (@RequestBody Usuario usuario) {
+        UsuarioDto obj = usuarioService.modificarUsuario(usuario);
         return new ResponseEntity<>(obj, HttpStatus.OK);
 
     }
