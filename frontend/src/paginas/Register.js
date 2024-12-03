@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import {BASE_URL} from "../config/config";
 
 const Register = () => {
     const [nombre, setNombre] = useState('');
@@ -14,12 +15,12 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8094/usuario/nuevo', {
+            const response = await axios.post(`${BASE_URL}/usuario/nuevo`, {
                 nombre_usuario: nombre,
                 email,
                 password_hash: password,
                 telefono,
-                rol:"user",
+                id_rol: 2,
             });
             console.log('Registration successful:', response.data);
             navigate('/login');

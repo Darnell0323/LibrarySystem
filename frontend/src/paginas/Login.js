@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 import { toast } from 'react-toastify';
 import { useAuth } from '../AuthContext';
+import {BASE_URL} from "../config/config";
+import {logintoken} from "../services/authService";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,11 +17,14 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8094/usuario/login', { email, password_hash: password });
-            console.log('Login successful:', response.data);
+            await logintoken(email, password);
+            //const response = await axios.post(`${BASE_URL}/usuario/login`, { email, password_hash: password },);
+            const nombre = localStorage.getItem('nombre');
+            const rol = localStorage.getItem('rol');
+            console.log('Login successful:', nombre);
             toast.success('Login successful!');
-            login(response.data.rol); // Actualiza el estado de autenticación con el rol del usuario
-            if (response.data.rol === 'admin') {
+            login(rol); // Actualiza el estado de autenticación con el rol del usuario
+            if (rol === 'Bibliotecario') {
                 navigate('/gestionUsuarios');
             } else {
                 navigate('/Booklist');

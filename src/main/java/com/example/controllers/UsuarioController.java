@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import com.example.Dtos.LoginRequestDto;
+import com.example.Dtos.LoginResponseDto;
 import com.example.Dtos.UsuarioDto;
 import com.example.models.Usuario;
 import com.example.security.TokenService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -28,11 +31,15 @@ public class UsuarioController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Usuario usuario) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getPassword());
-        var usuarioauthenticated = authenticationManager.authenticate(authentication);
-        var JWTtoken = tokenService.generateToken((Usuario) usuarioauthenticated.getPrincipal());
-        return ResponseEntity.ok(JWTtoken);
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequestDto.getEmail(),
+                        loginRequestDto.getPassword_hash()));
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        String JWTtoken = tokenService.generateToken(usuario); // Crea el token
+        LoginResponseDto loginResponseDto = new LoginResponseDto(JWTtoken,usuario.getRol().getRoleName(),usuario.getNombre_usuario()); // Crea un objeto respuesta login que guarda  el token y el rol
+        return ResponseEntity.ok(loginResponseDto); // Devuelve la respuesta del login
     }
 
     //Listar Usuarios

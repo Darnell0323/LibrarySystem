@@ -24,6 +24,8 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("auth0")
                     .withSubject(usuario.getUsername())
+                    .withClaim("rol",usuario.getRol().getRoleName())
+                    .withClaim("nombre",usuario.getUsername())
                     .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2))
                     .sign(algorithm);
         } catch (

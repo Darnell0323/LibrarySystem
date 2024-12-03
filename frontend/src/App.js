@@ -8,6 +8,8 @@ import { AuthProvider } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import GestionUsuarios from "./paginas/GestionUsuarios";
 import Booklist from "./paginas/Booklist";
+import PrivateRoute from "./components/PrivateRoute";
+import {Home} from "lucide-react";
 
 const App = () => {
     return (
@@ -18,7 +20,9 @@ const App = () => {
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route
+                        <Route path="/" element={<PrivateRoute path="/books" role="Usuario" element={Booklist} />} />
+                        <Route path="/books/:id" element={<PrivateRoute path="/books" role="Bibliotecario" element={GestionUsuarios} />} />
+                        {/*<Route
                             path="/books"
                             element={
                                 <ProtectedRoute>
@@ -31,7 +35,7 @@ const App = () => {
                             element={
                                 <GestionUsuarios/>
                             }
-                        />
+                        />*/}
                     </Routes>
                 </div>
             </Router>
