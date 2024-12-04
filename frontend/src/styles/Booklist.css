@@ -1,0 +1,64 @@
+/* Booklist.css */
+
+.booklist {
+    padding: 20px;
+    background-color: #1e3a8a; /* Dark blue background for the book list */
+    color: #ffffff; /* Default white text */
+    min-height: 100vh;
+  }
+  
+  .booklist h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff; /* White for the title */
+    margin-bottom: 20px;
+  }
+  
+  .section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+  }
+  
+  .bookcard {
+    background-color: #ffffff; /* White card background */
+    color: #111827; /* Dark gray text for readability */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .bookcard:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+  }
+  
+  .bookcard h2 {
+    font-size: 18px;
+    color: #1e40af; /* Nice blue for titles */
+    margin-bottom: 10px;
+  }
+  
+  .bookcard p {
+    font-size: 14px;
+    color: #374151; /* Dark gray for details */
+    margin-bottom: 8px;
+  }
+  
+  .booklistbtn {
+    background-color: #2563eb; /* Blue button background */
+    color: #ffffff; /* White text for button */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .booklistbtn:hover {
+    background-color: #1d4ed8; /* Slightly darker blue on hover */
+  }
+  

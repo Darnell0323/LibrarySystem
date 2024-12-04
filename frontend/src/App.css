@@ -1,1 +1,27 @@
+/* Navbar styling */
+.navbar {
+  width: 100%;
+  background-color: #03343a;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
+.navbar h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Adjust main content to avoid being hidden behind navbar */
+main {
+  padding-top: 60px; /* Adjust this based on navbar height */
+  margin: 0 auto;
+  max-width: 1200px;
+}
