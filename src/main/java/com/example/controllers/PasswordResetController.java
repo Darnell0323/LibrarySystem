@@ -98,7 +98,7 @@ public class PasswordResetController {
 
         var resetToken = passwordResetService.createPasswordResetToken(usuario);
 
-        String resetUrl = "http://localhost:3000/recuperarContrasena?token=" + resetToken.getToken();
+        String resetUrl = "http://localhost:3000/cambiarContraseña?token=" + resetToken.getToken();
         emailService.sendEmail(email, "Recuperar Contraseña", "Haz clic en el siguiente enlace: " + resetUrl);
 
         return ResponseEntity.ok("Correo enviado");

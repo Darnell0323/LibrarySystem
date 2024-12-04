@@ -13,6 +13,7 @@ import {Home} from "lucide-react";
 import Dashboard from "./paginas/Dashboard";
 import Header from "./components/Header";
 import RecuperarContrasena from "./paginas/RecuperarContraseña";
+import CambiarContrasena from "./paginas/CambiarContraseña";
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                         <Route path="/Login" element={<Login />} />
                         <Route path="/Register" element={<Register />} />
                         <Route path="/recuperarContrasena" element={<RecuperarContrasena/>}/>
+                        <Route path="/cambiarContraseña" element={<CambiarContrasena/>}/>
                         <Route
                             path="/Libros"
                             element={
