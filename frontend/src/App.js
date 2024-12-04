@@ -12,6 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import {Home} from "lucide-react";
 import Dashboard from "./paginas/Dashboard";
 import Header from "./components/Header";
+import RecuperarContrasena from "./paginas/RecuperarContraseña";
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                         <Route path="/Home" element={<Home/>}/>
                         <Route path="/Login" element={<Login />} />
                         <Route path="/Register" element={<Register />} />
+                        <Route path="/recuperarContrasena" element={<RecuperarContrasena/>}/>
                         <Route
                             path="/Libros"
                             element={

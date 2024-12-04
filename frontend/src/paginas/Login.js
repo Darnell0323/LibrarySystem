@@ -107,22 +107,23 @@ const Login = () => {
                                             Sign In
                                         </button>
                                     </div>
+                                    <div className="flex flex-wrap mt-6">
+                                        <div className="text-center mt-4">
+                                            <a href="/recuperarContrasena" className="text-blue-500 underline">
+                                                ¿Olvidaste tu contraseña?
+                                            </a>
+                                        </div>
+                                        <div className="text-center mt-4">
+                                            <a href="/Register" className="text-blue-500 underline">
+                                                ¿Crear nueva cuenta?
+                                            </a>
+                                        </div>
+
+                                    </div>
                                 </form>
                             </div>
                         </div>
-                        <div className="flex flex-wrap mt-6">
-                            <div className="text-center mt-4">
-                                <a href="/recuperarContrasena" className="text-blue-500 underline">
-                                    ¿Olvidaste tu contraseña?
-                                </a>
-                            </div>
-                            <div className="text-center mt-4">
-                                <a href="/recuperarContrasena" className="text-blue-500 underline">
-                                    ¿Crear nueva cuenta?
-                                </a>
-                            </div>
 
-                        </div>
                     </div>
                 </div>
             </section>

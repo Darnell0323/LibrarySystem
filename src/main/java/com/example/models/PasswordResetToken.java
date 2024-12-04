@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Table(name = "password_reset_token")
 public class PasswordResetToken {
 
     // Getters y setters
@@ -21,7 +22,7 @@ public class PasswordResetToken {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Column(nullable = false) // Fecha de expiración obligatoria
+    @Column(nullable = false, name = "expiration_date") // Fecha de expiración obligatoria
     private LocalDateTime expirationDate;
 
     // Constructor vacío

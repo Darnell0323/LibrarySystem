@@ -8,9 +8,10 @@ const RecuperarContrasena = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8094/auth/recuperarContrasena', { email });
+            const response = await axios.post(`http://localhost:8094/auth/recuperarContrasena?email=${email}`);
             setMessage(response.data);
         } catch (error) {
+            console.log(error)
             setMessage('Error al enviar el correo');
         }
     };
