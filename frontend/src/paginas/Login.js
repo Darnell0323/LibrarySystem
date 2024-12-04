@@ -111,16 +111,17 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="flex flex-wrap mt-6">
-                            <div className="w-1/2">
-                                <Link to="/forgot-password" className="text-gray-300">
-                                    <small>Forgot password?</small>
-                                </Link>
+                            <div className="text-center mt-4">
+                                <a href="/recuperarContrasena" className="text-blue-500 underline">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
                             </div>
-                            <div className="w-1/2 text-right">
-                                <Link to="/register" className="text-gray-300">
-                                    <small>Create new account</small>
-                                </Link>
+                            <div className="text-center mt-4">
+                                <a href="/recuperarContrasena" className="text-blue-500 underline">
+                                    ¿Crear nueva cuenta?
+                                </a>
                             </div>
+
                         </div>
                     </div>
                 </div>

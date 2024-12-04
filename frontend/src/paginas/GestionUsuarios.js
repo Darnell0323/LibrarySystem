@@ -1,13 +1,7 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { Table, TableHeader, TableBody, TableRow, TableCell } from '../components/ui/table';
-import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalTitle,
-    ModalFooter,
-} from '../components/ui/modal';
+import axiosInstance from "../api/axiosConfig";
 
 const GestionUsuarios = () => {
     const [users, setUsers] = useState([]);
@@ -19,23 +13,30 @@ const GestionUsuarios = () => {
         email: '',
         telefono: '',
         password_hash: '',
-        rol: 'usuario'
+        id_rol: 0
     });
 
+    // Fetch para obtener la lista de usuarios
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:8094/usuario/listar');
-            const data = await response.json();
-            setUsers(data);
+            const response = await axiosInstance.get('/usuario/listar');
+            if (response.status === 200) {
+                setUsers(response.data); // Actualiza el estado con los datos obtenidos
+            } else {
+                console.error(`Error: ${response.status}`);
+            }
         } catch (error) {
-            showAlert('Error al cargar usuarios', 'error');
+            console.error('Error al obtener usuarios:', error);
+            if (error.response) {
+                console.error('Respuesta del servidor:', error.response.data);
+            }
         }
     };
 
+    // Ejecuta fetchUsers al montar el componente
     useEffect(() => {
-        fetchUsers();
-    }, [fetchUsers]);
-
+        fetchUsers(); // Llama a fetchUsers y actualiza el estado
+    }, []);
 
     const handleInputChange = (e) => {
         setFormData({
@@ -51,43 +52,38 @@ const GestionUsuarios = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = currentUser
-            ? 'http://localhost:8094/usuario/editar'
-            : 'http://localhost:8094/usuario/nuevo';
+        const url = currentUser ? '/usuario/editar' : '/usuario/nuevo';
 
         try {
-            const response = await fetch(url, {
+            const response = await axiosInstance({
                 method: currentUser ? 'PUT' : 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(currentUser ? { ...formData, id: currentUser.id } : formData),
+                url,
+                data: currentUser ? { ...formData, id: currentUser.id } : formData,
             });
 
-            if (response.ok) {
+            if (response.status === 200 || response.status === 201) {
                 showAlert(currentUser ? 'Usuario actualizado exitosamente' : 'Usuario creado exitosamente', 'success');
                 setShowModal(false);
-                fetchUsers();
+                await fetchUsers(); // Actualiza la lista después de crear o editar un usuario
                 resetForm();
             }
         } catch (error) {
             showAlert('Error al procesar la solicitud', 'error');
+            console.error(error);
         }
     };
 
     const handleDelete = async (id) => {
         if (window.confirm('¿Está seguro de eliminar este usuario?')) {
             try {
-                const response = await fetch(`http://localhost:8094/usuario/eliminar/${id}`, {
-                    method: 'DELETE',
-                });
-
-                if (response.ok) {
+                const response = await axiosInstance.delete(`/usuario/eliminar/${id}`);
+                if (response.status === 200) {
                     showAlert('Usuario eliminado exitosamente', 'success');
-                    fetchUsers();
+                    fetchUsers(); // Actualiza la lista después de eliminar un usuario
                 }
             } catch (error) {
                 showAlert('Error al eliminar usuario', 'error');
+                console.error(error);
             }
         }
     };
@@ -99,32 +95,28 @@ const GestionUsuarios = () => {
             email: user.email,
             telefono: user.telefono,
             password_hash: '',
-            rol: user.rol
+            id_rol: user.id_rol
         });
         setShowModal(true);
     };
-
     const resetForm = () => {
         setFormData({
             nombre_usuario: '',
             email: '',
             telefono: '',
             password_hash: '',
-            rol: 'usuario'
+            id_rol: null
         });
         setCurrentUser(null);
     };
 
     return (
-        <div className="p-6 max-w-7xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
+        <div className="p-6 max-w-7xl mx-auto mt-16">
+            <div className="flex justify-between items-center mb-6 mt-10">
                 <h1 className="text-2xl font-bold text-gray-900">Gestión de Usuarios</h1>
-                <Button onClick={() => {
-                    resetForm();
-                    setShowModal(true);
-                }}>
-                    Nuevo Usuario
-                </Button>
+
+                {/* Botón para abrir el modal */}
+                <Button onClick={() => {setShowModal(true); setCurrentUser(false);resetForm()}}>Nuevo Usuario</Button>
             </div>
 
             {alert.show && (
@@ -135,6 +127,7 @@ const GestionUsuarios = () => {
                 </div>
             )}
 
+            {/* Tabla de usuarios */}
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -148,30 +141,18 @@ const GestionUsuarios = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user) => (
+                        {users.map(user => (
                             <TableRow key={user.id}>
                                 <TableCell>{user.id}</TableCell>
                                 <TableCell>{user.nombre_usuario}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{user.telefono}</TableCell>
-                                <TableCell>{user.rol}</TableCell>
+                                <TableCell>{user.id_rol}</TableCell>
                                 <TableCell>
-                                    <div className="flex space-x-2">
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => handleEdit(user)}
-                                        >
-                                            Editar
-                                        </Button>
-                                        <Button
-                                            variant="destructive"
-                                            size="sm"
-                                            onClick={() => handleDelete(user.id)}
-                                        >
-                                            Eliminar
-                                        </Button>
-                                    </div>
+                                    <Button onClick={() => {handleEdit(user);setCurrentUser(true)}}>Editar</Button>
+                                    <Button onClick={() => handleDelete(user.id)} variant="destructive">
+                                        Eliminar
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -179,108 +160,104 @@ const GestionUsuarios = () => {
                 </Table>
             </div>
 
-            <Modal open={showModal} onOpenChange={setShowModal}>
-                <ModalContent>
-                    <form onSubmit={handleSubmit}>
-                        <ModalHeader>
-                            <ModalTitle>
-                                {currentUser ? 'Editar Usuario' : 'Nuevo Usuario'}
-                            </ModalTitle>
-                        </ModalHeader>
-
-                        <div className="space-y-4 py-4">
-                            <div className="grid gap-4 px-6">
-                                <div className="grid gap-2">
-                                    <label htmlFor="nombre_usuario" className="text-sm font-medium">
-                                        Nombre
-                                    </label>
-                                    <input
-                                        id="nombre_usuario"
-                                        name="nombre_usuario"
-                                        type="text"
-                                        value={formData.nombre_usuario}
-                                        onChange={handleInputChange}
-                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <label htmlFor="email" className="text-sm font-medium">
-                                        Email
-                                    </label>
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <label htmlFor="telefono" className="text-sm font-medium">
-                                        Teléfono
-                                    </label>
-                                    <input
-                                        id="telefono"
-                                        name="telefono"
-                                        type="tel"
-                                        value={formData.telefono}
-                                        onChange={handleInputChange}
-                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <label htmlFor="password_hash" className="text-sm font-medium">
-                                        Contraseña
-                                    </label>
-                                    <input
-                                        id="password_hash"
-                                        name="password_hash"
-                                        type="password"
-                                        value={formData.password_hash}
-                                        onChange={handleInputChange}
-                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-                                        required={!currentUser}
-                                    />
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <label htmlFor="rol" className="text-sm font-medium">
-                                        Rol
-                                    </label>
-                                    <select
-                                        id="rol"
-                                        name="rol"
-                                        value={formData.rol}
-                                        onChange={handleInputChange}
-                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-                                        required
-                                    >
-                                        <option value="usuario">Usuario</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
+            {/* Modal */}
+            {showModal && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center animate-fadeIn"
+                    style={{display: "flex", justifyContent: "center", alignItems: "center"}}
+                >
+                    <div
+                        className="modal-content bg-white p-6 rounded-lg shadow-lg max-w-lg w-full space-y-6 animate-fadeIn"
+                        style={{
+                            width: "400px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                            animation: "fadeIn 0.3s ease-out",
+                        }}
+                    >
+                        <h2 className="text-xl font-semibold text-center">{currentUser ? 'Actualizar Usuario' : 'Crear Nuevo Usuario'}</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="space-y-4">
+                                <div className="grid gap-4 px-6">
+                                    <div className="grid gap-2">
+                                        <label htmlFor="nombre_usuario" className="my-4 text-blueGray-500 text-lg leading-relaxed">Nombre</label>
+                                        <input
+                                            id="nombre_usuario"
+                                            name="nombre_usuario"
+                                            type="text"
+                                            value={formData.nombre_usuario}
+                                            onChange={handleInputChange}
+                                            className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <label htmlFor="email" className="my-4 text-blueGray-500 text-lg leading-relaxed">Email</label>
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <label htmlFor="telefono" className="my-4 text-blueGray-500 text-lg leading-relaxed">Teléfono</label>
+                                        <input
+                                            id="telefono"
+                                            name="telefono"
+                                            type="tel"
+                                            value={formData.telefono}
+                                            onChange={handleInputChange}
+                                            className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <label htmlFor="password_hash"
+                                               className="my-4 text-blueGray-500 text-lg leading-relaxed">Contraseña</label>
+                                        <input
+                                            id="password_hash"
+                                            name="password_hash"
+                                            type="password"
+                                            value={formData.password_hash}
+                                            onChange={handleInputChange}
+                                            className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <label htmlFor={`rol_${currentUser ? currentUser.id : ''}`}
+                                               className="my-4 text-blueGray-500 text-lg leading-relaxed">
+                                            Rol
+                                        </label>
+                                        <select
+                                            id={`rol_${currentUser ? currentUser.id : ''}`}
+                                            name="rol"
+                                            value={formData.id_rol}
+                                            onChange={handleInputChange}
+                                            className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                                            required
+                                        >
+                                            <option value="usuario">Usuario</option>
+                                            <option value="bibliotecario">bibliotecario</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <ModalFooter>
-                            <Button variant="outline" type="button" onClick={() => setShowModal(false)}>
-                                Cancelar
-                            </Button>
-                            <Button type="submit">
-                                {currentUser ? 'Actualizar' : 'Crear'}
-                            </Button>
-                        </ModalFooter>
-                    </form>
-                </ModalContent>
-            </Modal>
+                            <div className="flex justify-end space-x-2 mt-4">
+                                <Button variant="destructive" type="button" onClick={() => setShowModal(false)}>
+                                    Cancelar
+                                </Button>
+                                <Button type="submit">{currentUser ? 'Actualizar' : 'Crear'}</Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
+
     );
 };
 

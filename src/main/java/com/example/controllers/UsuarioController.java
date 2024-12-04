@@ -81,4 +81,6 @@ public class UsuarioController {
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
+
+
 }

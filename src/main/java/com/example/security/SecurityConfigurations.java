@@ -34,10 +34,11 @@ public class SecurityConfigurations implements WebMvcConfigurer {
                 .cors(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.POST, "/usuario/login","/usuario/nuevo")//Endpoints que autoriza din token
+                        .requestMatchers(HttpMethod.POST, "/usuario/login","/usuario/nuevo", "/auth/recuperarContrasena", "/auth/cambiarContrasena")//Endpoints que autoriza din token
                         .permitAll()
                         .anyRequest()
                         .authenticated()
+
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

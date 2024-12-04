@@ -22,6 +22,14 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String path = request.getRequestURI();
+
+        // Si la solicitud es al endpoint de login, no procesamos el token
+        if (path.equals("/usuario/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         var authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             authHeader = authHeader.replace("Bearer ", "");

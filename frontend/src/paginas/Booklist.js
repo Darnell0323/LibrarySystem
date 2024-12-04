@@ -9,7 +9,9 @@ const Booklist = () => {
 
     useEffect(() => {
         let fetchData = async () => {
-            let response = await fetch('http://localhost:8094/libro/disponibles'); // Updated endpoint
+            let response = await fetch('http://localhost:8094/libro/disponibles', {
+                method: 'GET',
+            }); // Updated endpoint
             let data = await response.json();
             setBooks(data);
         }
