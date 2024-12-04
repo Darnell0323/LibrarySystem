@@ -42,7 +42,7 @@ const CambiarContrasena = () => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="border p-2 w-full mb-4"
+                    className="border p-2 w-full mb-4 text-gray-800"
                     placeholder="Nueva contraseña"
                     required
                 />
@@ -50,7 +50,7 @@ const CambiarContrasena = () => {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="border p-2 w-full mb-4"
+                    className="border p-2 w-full mb-4 text-gray-800"
                     placeholder="Confirmar nueva contraseña"
                     required
                 />
