@@ -10,6 +10,7 @@ export const logintoken = async (email, password_hash) => {
         console.log(response.data);
         const { token, rol, nombre_usuario, id } = response.data;
         localStorage.setItem('token', token); // Guarda el token
+        console.log(localStorage.getItem('token'));
         localStorage.setItem('rol', rol); // Guarda el rol
         localStorage.setItem('usuario', nombre_usuario); // Guarda el rol
         localStorage.setItem('userId', id); // Save user ID

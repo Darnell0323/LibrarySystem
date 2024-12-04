@@ -55,7 +55,7 @@ public class Usuario implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("Bibliotecario"));
+        return List.of(new SimpleGrantedAuthority(rol.getRoleName()));
     }
 
     @Override

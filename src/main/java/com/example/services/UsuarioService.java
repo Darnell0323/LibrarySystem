@@ -71,6 +71,10 @@ public class UsuarioService implements IUsuario {
         }
     }
 
+    public Usuario EmailExiste(String email) {
+        return (Usuario) usuarioRepository.findByEmail(email);
+    }
+
     public UsuarioDto Dto(Usuario usuario) {
         UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.setId(usuario.getId());

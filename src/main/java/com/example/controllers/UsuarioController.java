@@ -38,7 +38,7 @@ public class UsuarioController {
                         loginRequestDto.getPassword_hash()));
         Usuario usuario = (Usuario) authentication.getPrincipal();
         String JWTtoken = tokenService.generateToken(usuario); // Crea el token
-        LoginResponseDto loginResponseDto = new LoginResponseDto(JWTtoken,usuario.getRol().getRoleName(),usuario.getNombre_usuario()); // Crea un objeto respuesta login que guarda  el token y el rol
+        LoginResponseDto loginResponseDto = new LoginResponseDto(JWTtoken,usuario.getRol().getRoleName(),usuario.getNombre_usuario(), usuario.getId()); // Crea un objeto respuesta login que guarda  el token y el rol
         return ResponseEntity.ok(loginResponseDto); // Devuelve la respuesta del login
     }
 
@@ -81,4 +81,6 @@ public class UsuarioController {
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
+
+
 }
