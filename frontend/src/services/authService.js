@@ -8,12 +8,11 @@ export const logintoken = async (email, password_hash) => {
             "password_hash": password_hash
         });
         console.log(response.data);
-        const token = response.data.token;
-        const rol = response.data.rol;
-        const nombre = response.data.nombre_usuario;
+        const { token, rol, nombre_usuario, id } = response.data;
         localStorage.setItem('token', token); // Guarda el token
         localStorage.setItem('rol', rol); // Guarda el rol
-        localStorage.setItem('usuario', nombre); // Guarda el rol
+        localStorage.setItem('usuario', nombre_usuario); // Guarda el rol
+        localStorage.setItem('userId', id); // Save user ID
         return response.data;
     } catch (error) {
         console.error('Error al iniciar sesión:', error);

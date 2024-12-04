@@ -9,6 +9,8 @@ const Booklist = () => {
     const [ejemplares, setEjemplares] = useState([]);
     const [showModal, setShowModal] = useState(false); // Modal state
     const [selectedEjemplar, setSelectedEjemplar] = useState(null); // Selected ejemplar
+    const [startDate, setStartDate] = useState(""); // Start date
+    const [endDate, setEndDate] = useState(""); // End date
 
     // Fetch ejemplares from the backend with token authentication
     useEffect(() => {
@@ -34,14 +36,79 @@ const Booklist = () => {
         fetchEjemplares();
     }, []);
 
+    // Handle reserve button
     const handleReserve = (ejemplar) => {
         setSelectedEjemplar(ejemplar);
         setShowModal(true);
     };
 
+    // Close modal
     const closeModal = () => {
         setShowModal(false);
         setSelectedEjemplar(null);
+        setStartDate("");
+        setEndDate("");
+    };
+
+    // Submit reservation
+    const submitReservation = async () => {
+        try {
+            // Validate dates
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            if (!startDate || !endDate || end - start > 7 * 24 * 60 * 60 * 1000) {
+                alert("End date must not exceed 7 days from start date.");
+                return;
+            }
+    
+            const token = localStorage.getItem("token"); // Get the token
+            const userId = localStorage.getItem("userId"); // Assume you store the user ID in localStorage
+            if (!userId) {
+                console.error("User ID not found in localStorage");
+                alert("Please log in again.");
+                return;
+            }
+    
+            // Debug token and userId
+            console.log("Token:", token);
+            console.log("User ID:", userId);
+    
+            // Reservation payload
+            const payload = {
+                ejemplar: { id: selectedEjemplar.id },
+                usuario: { id: parseInt(userId) },
+                dateBorrowed: startDate,
+                dateDue: endDate,
+            };
+    
+            console.log("Payload:", payload); // Debug payload
+    
+            const response = await fetch("http://localhost:8094/transactions", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include token
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+    
+            console.log("Response status:", response.status); // Debug response status
+    
+            if (response.ok) {
+                alert("Reservation successful!");
+                closeModal();
+                setEjemplares((prev) =>
+                    prev.filter((book) => book.id !== selectedEjemplar.id)
+                ); // Remove reserved book
+            } else {
+                const errorText = await response.text();
+                console.error("Reservation failed:", errorText);
+                alert("Reservation failed! " + errorText);
+            }
+        } catch (error) {
+            console.error("Error reserving ejemplar:", error);
+            alert("An error occurred. Please try again.");
+        }
     };
 
     return (
@@ -81,99 +148,31 @@ const Booklist = () => {
 
             {/* Modal */}
             {showModal && (
-                <div
-                    className="modal-overlay"
-                    style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 1000,
-                    }}
-                >
-                    <div
-                        className="modal-content"
-                        style={{
-                            background: "white",
-                            borderRadius: "10px",
-                            padding: "20px",
-                            width: "400px",
-                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                        }}
-                    >
+                <div className="modal-overlay">
+                    <div className="modal-content">
                         <h3>Reserve Book</h3>
                         <p>
                             Reserving <strong>Ejemplar ID: {selectedEjemplar?.id}</strong>
                         </p>
-                        <label htmlFor="start-date" style={{ display: "block", marginTop: "10px" }}>
-                            Start Date:
-                        </label>
+                        <label htmlFor="start-date">Start Date:</label>
                         <input
                             type="date"
                             id="start-date"
-                            style={{
-                                width: "100%",
-                                padding: "5px",
-                                margin: "5px 0",
-                                border: "1px solid #ccc",
-                                borderRadius: "5px",
-                            }}
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
                         />
-                        <label htmlFor="end-date" style={{ display: "block", marginTop: "10px" }}>
-                            End Date (max 7 days):
-                        </label>
+                        <label htmlFor="end-date">End Date (max 7 days):</label>
                         <input
                             type="date"
                             id="end-date"
-                            style={{
-                                width: "100%",
-                                padding: "5px",
-                                margin: "5px 0",
-                                border: "1px solid #ccc",
-                                borderRadius: "5px",
-                            }}
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
                         />
-                        <div
-                            className="modal-buttons"
-                            style={{
-                                display: "flex",
-                                justifyContent: "flex-end",
-                                marginTop: "20px",
-                            }}
-                        >
-                            <button
-                                onClick={closeModal}
-                                style={{
-                                    background: "red",
-                                    color: "white",
-                                    padding: "10px 15px",
-                                    marginRight: "10px",
-                                    border: "none",
-                                    borderRadius: "5px",
-                                    cursor: "pointer",
-                                }}
-                            >
+                        <div className="modal-buttons">
+                            <button onClick={closeModal} className="cancel-btn">
                                 Cancel
                             </button>
-                            <button
-                                onClick={() => {
-                                    closeModal();
-                                    alert("Reservation confirmed!");
-                                }}
-                                style={{
-                                    background: "green",
-                                    color: "white",
-                                    padding: "10px 15px",
-                                    border: "none",
-                                    borderRadius: "5px",
-                                    cursor: "pointer",
-                                }}
-                            >
+                            <button onClick={submitReservation} className="reserve-btn">
                                 Reserve
                             </button>
                         </div>

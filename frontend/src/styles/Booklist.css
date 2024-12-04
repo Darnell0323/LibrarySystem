@@ -62,3 +62,109 @@
     background-color: #1d4ed8; /* Slightly darker blue on hover */
   }
   
+
+  /* Modal overlay styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above everything else */
+}
+
+/* Modal content styling */
+/* Modal overlay styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above everything else */
+}
+
+/* Modal content styling */
+.modal-content {
+    background: #ffffff; /* White background for the modal */
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center; /* Center text inside the modal */
+    color: #374151; /* Gray text for better visibility */
+}
+
+/* Modal title styling */
+.modal-content h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #1e40af; /* Blue color for titles */
+}
+
+/* Label styling */
+.modal-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #374151; /* Gray color for labels */
+}
+
+/* Input field styling */
+.modal-content input[type="date"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #111827; /* Dark gray for text inside inputs */
+}
+
+/* Modal button container */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Cancel button styling */
+.modal-buttons .cancel-btn {
+    background: red;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Reserve button styling */
+.modal-buttons .reserve-btn {
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Hover effects for buttons */
+.modal-buttons .cancel-btn:hover {
+    background: darkred;
+}
+
+.modal-buttons .reserve-btn:hover {
+    background: darkgreen;
+}
