@@ -1,0 +1,42 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #282c34;
+    padding: 10px 20px;
+    color: white;
+    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav li {
+    margin-left: 15px;
+}
+
+button {
+    background-color: #61dafb;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #21a1f1;
+}
+
+body {
+    margin-top: 60px; /* Da espacio para que el contenido no se solape con el header */
+}
+
+
+button:hover {
+    background-color: #21a1f1;
+}
