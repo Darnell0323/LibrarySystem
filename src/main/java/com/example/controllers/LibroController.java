@@ -32,4 +32,15 @@ public class LibroController {
         List<Libro> disponibles = libroService.buscarLibrosDisponibles();
         return new ResponseEntity<>(disponibles, HttpStatus.OK);
     }
+
+    // Search for books with filters
+    @GetMapping("/search")
+    public ResponseEntity<List<Libro>> searchLibros(
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) String autor,
+            @RequestParam(required = false) Integer categoriaId
+    ) {
+        List<Libro> libros = libroService.searchLibros(titulo, autor, categoriaId);
+        return ResponseEntity.ok(libros);
+    }
 }

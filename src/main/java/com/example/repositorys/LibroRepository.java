@@ -12,4 +12,11 @@ public interface LibroRepository extends JpaRepository<Libro, Integer> {
 
     // Find books that are available
     List<Libro> findByDisponibleTrue();
+
+    // Custom search query with filters
+    List<Libro> findByTituloContainingAndAutorContainingAndCategoriaId(
+            String titulo,
+            String autor,
+            Integer categoriaId
+    );
 }

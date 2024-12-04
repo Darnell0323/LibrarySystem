@@ -28,5 +28,15 @@ public class LibroService {
         return libroRepository.findByDisponibleTrue();
     }
 
-    // Additional methods like save, update, delete can be added here
+    // Search for books with filters
+    public List<Libro> searchLibros(String titulo, String autor, Integer categoriaId) {
+        if (titulo == null && autor == null && categoriaId == null) {
+            return libroRepository.findAll();
+        }
+        return libroRepository.findByTituloContainingAndAutorContainingAndCategoriaId(
+                titulo != null ? titulo : "",
+                autor != null ? autor : "",
+                categoriaId
+        );
+    }
 }
