@@ -21,8 +21,7 @@ const App = () => {
                     <Header/>
                     <ToastContainer />
                     <Routes>
-                        <Route path="/Dashboard" element={<Dashboard/>}/>
-                        <Route path="/Home" element={<Home/>}/>
+                        <Route path="/" element={<Dashboard/>}/>
                         <Route path="/Login" element={<Login />} />
                         <Route path="/Register" element={<Register />} />
                         <Route

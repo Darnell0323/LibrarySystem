@@ -23,10 +23,14 @@ public class LibroService {
         return libroRepository.findAll();
     }
 
-    // Search for available books
-    public List<Libro> buscarLibrosDisponibles() {
-        return libroRepository.findByDisponibleTrue();
+    public Libro getLibroById(int id) {
+        return libroRepository.getReferenceById(id);
     }
+
+    // Search for available books
+    /*public List<Libro> buscarLibrosDisponibles() {
+        return libroRepository.findByDisponibleTrue();
+    }*/
 
     // Search for books with filters
     public List<Libro> searchLibros(String titulo, String autor, Integer categoriaId) {
@@ -38,5 +42,16 @@ public class LibroService {
                 autor != null ? autor : "",
                 categoriaId
         );
+    }
+    public List<Libro> getLibrosByAutor(String autor) {
+        return libroRepository.findByAutor(autor);
+    }
+
+    public List<Libro> getLibrosByTitulo(String titulo) {
+        return libroRepository.findByTitulo(titulo);
+    }
+
+    public List<Libro> getLibrosByCategoria(Integer categoriaId) {
+        return libroRepository.findByCategoriaId(categoriaId);
     }
 }

@@ -2,13 +2,13 @@ package com.example.controllers;
 
 import java.util.List;
 
+import com.example.Dtos.EjemplarLibroDto;
+import com.example.Dtos.UsuarioDto;
+import com.example.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.models.EjemplarLibro;
 import com.example.services.EjemplarLibroService;
@@ -26,8 +26,8 @@ public class EjemplarLibroController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<EjemplarLibro>> listarTodos() {
-        List<EjemplarLibro> ejemplares = ejemplarLibroService.getAllEjemplares();
+    public ResponseEntity<List<EjemplarLibroDto>> listarTodos() {
+        List<EjemplarLibroDto> ejemplares = ejemplarLibroService.getAllEjemplares();
         return new ResponseEntity<>(ejemplares, HttpStatus.OK);
     }
 
@@ -35,5 +35,17 @@ public class EjemplarLibroController {
     public ResponseEntity<List<EjemplarLibro>> buscarDisponibles() {
         List<EjemplarLibro> disponibles = ejemplarLibroService.getAvailableEjemplares();
         return new ResponseEntity<>(disponibles, HttpStatus.OK);
+    }
+
+    @PostMapping("/nuevo")
+    public  ResponseEntity<EjemplarLibro>agregar (@RequestBody EjemplarLibro ejemplarLibro) {
+        EjemplarLibro obj = ejemplarLibroService.nuevoLibro(ejemplarLibro);
+        return new ResponseEntity<>(obj, HttpStatus.OK);
+    }
+
+    @GetMapping("/busqueda")
+    public  ResponseEntity<List<EjemplarLibroDto>> buscarBusqueda(@RequestParam int id) {
+        List<EjemplarLibroDto> ejemplares = ejemplarLibroService.getAllEjemplares();
+        return new ResponseEntity<>(ejemplares, HttpStatus.OK);
     }
 }

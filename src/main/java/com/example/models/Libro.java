@@ -37,6 +37,6 @@ public class Libro {
     @Column(name = "fecha_publicacion")
     private LocalDate fechaPublicacion;
 
-    @Column(name = "disponible")
-    private boolean disponible;
+    /*@Column(name = "disponible")
+    private boolean disponible;*/
 }

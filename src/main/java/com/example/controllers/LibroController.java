@@ -27,11 +27,11 @@ public class LibroController {
     }
 
     // Search for available books
-    @GetMapping("/disponibles")
+ /*   @GetMapping("/disponibles")
     public ResponseEntity<List<Libro>> buscarLibrosDisponibles() {
         List<Libro> disponibles = libroService.buscarLibrosDisponibles();
         return new ResponseEntity<>(disponibles, HttpStatus.OK);
-    }
+    }*/
 
     // Search for books with filters
     @GetMapping("/search")

@@ -11,7 +11,7 @@ import com.example.models.Libro;
 public interface LibroRepository extends JpaRepository<Libro, Integer> {
 
     // Find books that are available
-    List<Libro> findByDisponibleTrue();
+    //List<Libro> findByDisponibleTrue();
 
     // Custom search query with filters
     List<Libro> findByTituloContainingAndAutorContainingAndCategoriaId(
@@ -19,4 +19,7 @@ public interface LibroRepository extends JpaRepository<Libro, Integer> {
             String autor,
             Integer categoriaId
     );
+    List<Libro> findByAutor(String autor);
+    List<Libro> findByCategoriaId(Integer categoriaId);
+    List<Libro> findByTitulo(String titulo);
 }
