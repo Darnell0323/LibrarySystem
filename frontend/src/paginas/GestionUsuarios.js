@@ -39,11 +39,14 @@ const GestionUsuarios = () => {
     }, []);
 
     const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: name === 'id_rol' ? Number(value) : value, // Convierte a número solo si el campo es id_rol
         });
     };
+
 
     const showAlert = (message, type) => {
         setAlert({ show: true, message, type });
@@ -240,8 +243,9 @@ const GestionUsuarios = () => {
                                             className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                                             required
                                         >
-                                            <option value="usuario">Usuario</option>
-                                            <option value="bibliotecario">bibliotecario</option>
+                                            <option value="2">Usuario</option>
+                                     
+                                            <option value="1">bibliotecario</option>
                                         </select>
                                     </div>
                                 </div>
