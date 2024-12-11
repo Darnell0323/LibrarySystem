@@ -2,14 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom, #1e3a8a, #111827);
-  color: #ffffff;
-  min-height: 100vh;
-}
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+
