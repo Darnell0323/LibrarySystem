@@ -10,12 +10,17 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
 public class UsuarioService implements IUsuario {
+
+    private static final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     private UsuarioRepository usuarioRepository;
 
@@ -64,6 +69,7 @@ public class UsuarioService implements IUsuario {
             obj.setEmail(usuario.getEmail());
             obj.setPassword_hash(usuario.getPassword_hash());
             obj.setRol(usuario.getRol());
+            logger.info(obj.toString());
             usuarioRepository.save(obj);
             return Dto(obj);
         } else {

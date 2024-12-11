@@ -9,11 +9,13 @@ const GestionUsuarios = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [alert, setAlert] = useState({ show: false, message: '', type: '' });
     const [formData, setFormData] = useState({
+        id: 0,
         nombre_usuario: '',
         email: '',
         telefono: '',
         password_hash: '',
-        id_rol: 0
+        id_rol: 0,
+        rol: null
     });
 
     // Fetch para obtener la lista de usuarios
@@ -56,13 +58,14 @@ const GestionUsuarios = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = currentUser ? '/usuario/editar' : '/usuario/nuevo';
-
+        console.log(formData);
         try {
             const response = await axiosInstance({
                 method: currentUser ? 'PUT' : 'POST',
                 url,
-                data: currentUser ? { ...formData, id: currentUser.id } : formData,
+                data: {...formData, rol: formData.id_rol===2 ? { id: 2, roleName: "Usuario" }:{ id: 1, roleName: "bibliotecario" }},
             });
+            console.log(response);
 
             if (response.status === 200 || response.status === 201) {
                 showAlert(currentUser ? 'Usuario actualizado exitosamente' : 'Usuario creado exitosamente', 'success');
@@ -94,21 +97,25 @@ const GestionUsuarios = () => {
     const handleEdit = (user) => {
         setCurrentUser(user);
         setFormData({
+            id:user.id,
             nombre_usuario: user.nombre_usuario,
             email: user.email,
             telefono: user.telefono,
             password_hash: '',
-            id_rol: user.id_rol
+            id_rol: user.rol.id,
+            rol: user.rol
         });
         setShowModal(true);
     };
     const resetForm = () => {
         setFormData({
+            id:0,
             nombre_usuario: '',
             email: '',
             telefono: '',
             password_hash: '',
-            id_rol: null
+            id_rol: 0,
+            rol: null
         });
         setCurrentUser(null);
     };
@@ -237,8 +244,8 @@ const GestionUsuarios = () => {
                                         </label>
                                         <select
                                             id={`rol_${currentUser ? currentUser.id : ''}`}
-                                            name="rol"
-                                            value={formData.id_rol}
+                                            name="id_rol"
+                                            value={currentUser ? formData.rol.roleName: ''}
                                             onChange={handleInputChange}
                                             className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                                             required
