@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 //import "../styles/Booklist.css";
 //import "../styles/userlist.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -91,7 +92,8 @@ const Booklist = () => {
 
     // Submit reservation (same as your existing implementation)
     const submitReservation = async () => {
-        // Logic for reservation (same as before)
+        setShowModal(false);
+        toast.success('reservation successful!');
     };
 
     return (
@@ -99,6 +101,41 @@ const Booklist = () => {
             <h1 className="text-2xl font-bold mb-6">
                 Available Copies ({ejemplares.length})
             </h1>
+            <form
+                onSubmit={handleSearch}
+                className="search-bar flex flex-col md:flex-row gap-4 mb-6"
+            >
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Search by Title"
+                    value={searchParams.title}
+                    onChange={handleInputChange}
+                    className="w-full md:w-1/3 p-2 border border-gray-300 rounded-md"
+                />
+                <input
+                    type="text"
+                    name="author"
+                    placeholder="Search by Author"
+                    value={searchParams.author}
+                    onChange={handleInputChange}
+                    className="w-full md:w-1/3 p-2 border border-gray-300 rounded-md"
+                />
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="Search by Category"
+                    value={searchParams.category}
+                    onChange={handleInputChange}
+                    className="w-full md:w-1/3 p-2 border border-gray-300 rounded-md"
+                />
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                >
+                    Search
+                </button>
+            </form>
             <div className="section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {ejemplares.map((ejemplar) => (
                     <div
@@ -126,7 +163,7 @@ const Booklist = () => {
                         <button
                             title="Reserve Now"
                             onClick={() => handleReserve(ejemplar)}
-                            className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+                            className="mt-4 bg-green-600 text-black px-4 py-2 rounded-md hover:bg-green-700"
                         >
                             Reserve Now
                         </button>
@@ -165,7 +202,7 @@ const Booklist = () => {
                         <div className="modal-buttons flex justify-end gap-4">
                             <button
                                 onClick={closeModal}
-                                className="cancel-btn bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700"
+                                className="cancel-btn bg-gray-600 text-black px-4 py-2 rounded-md hover:bg-gray-700"
                             >
                                 Cancel
                             </button>

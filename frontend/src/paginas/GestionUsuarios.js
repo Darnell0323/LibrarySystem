@@ -14,8 +14,7 @@ const GestionUsuarios = () => {
         email: '',
         telefono: '',
         password_hash: '',
-        id_rol: 0,
-        rol: null
+        id_rol: 0
     });
 
     // Fetch para obtener la lista de usuarios
@@ -63,7 +62,7 @@ const GestionUsuarios = () => {
             const response = await axiosInstance({
                 method: currentUser ? 'PUT' : 'POST',
                 url,
-                data: {...formData, rol: formData.id_rol===2 ? { id: 2, roleName: "Usuario" }:{ id: 1, roleName: "bibliotecario" }},
+                data: formData,
             });
             console.log(response);
 
@@ -102,8 +101,7 @@ const GestionUsuarios = () => {
             email: user.email,
             telefono: user.telefono,
             password_hash: '',
-            id_rol: user.rol.id,
-            rol: user.rol
+            id_rol: user.rol.id
         });
         setShowModal(true);
     };
@@ -114,8 +112,7 @@ const GestionUsuarios = () => {
             email: '',
             telefono: '',
             password_hash: '',
-            id_rol: 0,
-            rol: null
+            id_rol: 0
         });
         setCurrentUser(null);
     };
@@ -245,13 +242,13 @@ const GestionUsuarios = () => {
                                         <select
                                             id={`rol_${currentUser ? currentUser.id : ''}`}
                                             name="id_rol"
-                                            value={currentUser ? formData.rol.roleName: ''}
+                                            value={currentUser ? formData.id_rol===1 ? "1": "2" : ''}
                                             onChange={handleInputChange}
                                             className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                                             required
                                         >
                                             <option value="2">Usuario</option>
-                                            <option value="1">bibliotecario</option>
+                                            <option value="1">Bibliotecario</option>
                                         </select>
                                     </div>
                                 </div>

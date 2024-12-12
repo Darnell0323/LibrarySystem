@@ -44,8 +44,8 @@ public class EjemplarLibroController {
     }
 
     @GetMapping("/busqueda")
-    public  ResponseEntity<List<EjemplarLibroDto>> buscarBusqueda(@RequestParam int id) {
-        List<EjemplarLibroDto> ejemplares = ejemplarLibroService.getAllEjemplares();
+    public  ResponseEntity<List<EjemplarLibroDto>> buscarBusqueda(@RequestParam(required = false) String titulo, @RequestParam(required = false) String autor,@RequestParam(required = false) String categoria ) {
+        List<EjemplarLibroDto> ejemplares = ejemplarLibroService.buscarLibro(titulo,autor,categoria);
         return new ResponseEntity<>(ejemplares, HttpStatus.OK);
     }
 }

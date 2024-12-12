@@ -67,8 +67,8 @@ public class UsuarioService implements IUsuario {
             obj.setNombre_usuario(usuario.getNombre_usuario());
             obj.setTelefono(usuario.getTelefono());
             obj.setEmail(usuario.getEmail());
-            obj.setPassword_hash(usuario.getPassword_hash());
-            obj.setRol(usuario.getRol());
+            obj.setPassword_hash(new BCryptPasswordEncoder().encode(usuario.getPassword_hash()));
+            obj.setId_rol(usuario.getId_rol());
             logger.info(obj.toString());
             usuarioRepository.save(obj);
             return Dto(obj);

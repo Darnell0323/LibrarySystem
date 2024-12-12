@@ -7,7 +7,7 @@ const Header = () => {
     const { isAuthenticated, logout } = useAuth();
 
     return (
-        <header className="top-0 left-0 w-full shadow-md z-50">
+        <header className=" sticky top-0 left-0 w-full shadow-md z-50">
             <nav className="flex justify-end p-4">
                 {!isAuthenticated ? (
                     <>

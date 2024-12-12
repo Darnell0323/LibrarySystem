@@ -50,14 +50,14 @@ public class EjemplarLibroService {
     public EjemplarLibro nuevoLibro(EjemplarLibro libro) {
         return ejemplarLibroRepository.save(libro);
     }
-    /*public  List<EjemplarLibro> buscarLibro(String titulo, String autor, Integer categoria_id) {
-        if (titulo == null && autor == null && categoria_id == null) {
-            return getAllEjemplares();
+
+    public  List<EjemplarLibroDto> buscarLibro(String titulo, String autor, String categoria) {
+        var ejemplar = ejemplarLibroRepository.findByTitleAndAuthorAndCategoria("%"+titulo+"%", "%"+autor+"%", "%"+categoria+"%");
+        if (ejemplar != null && !ejemplar.isEmpty()) {
+            return ejemplar;
         }
-        if (titulo == null && autor != null && categoria_id != null) {
-            libroService.getLibrosByCategoria(categoria_id);
-        }
-    }*/
+        return new ArrayList<>();
+    }
 
     @Autowired
     public void setLibroService(LibroService libroService) {
